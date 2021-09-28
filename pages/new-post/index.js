@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import NewMeetUpForm from "../../components/meetups/NewPostForm";
+import NewMeetUpForm from "../../components/posts/NewPostForm";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../store/slice";
@@ -7,7 +7,7 @@ import { wrapper } from "../../store/store";
 import { addDoc, collection } from "@firebase/firestore";
 import db from "../../firebase/firebase";
 import { submitPost } from "../../store/postsSlice";
-import NewPostForm from "../../components/meetups/NewPostForm";
+import NewPostForm from "../../components/posts/NewPostForm";
 
 function NewMeetPage(props) {
   const router = useRouter();

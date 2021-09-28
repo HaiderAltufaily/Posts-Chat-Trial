@@ -7,7 +7,7 @@ import useFetch from "../../hooks/useFetch";
 import { addReply } from "../../store/repliesSlice";
 import { getSingleUser } from "../../store/usersSlice";
 
-import classes from "./MeetUpDetail.module.css";
+import classes from "./MeetupDetail.module.css";
 
 function PostDetails(props) {
   const [useer, setUser] = useState({});

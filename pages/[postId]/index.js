@@ -7,9 +7,9 @@ import {
 } from "@firebase/firestore";
 import moment from "moment";
 import React, { Fragment, useEffect, useState } from "react";
-import PostDetails from "../../components/meetups/PostDetails";
+import PostDetails from "../../components/posts/PostDetails";
 
-import ReplyList from "../../components/meetups/ReplyList";
+import ReplyList from "../../components/posts/ReplyList";
 import db from "../../firebase/firebase";
 import { wrapper } from "../../store/store";
 import { getSingleUser } from "../../store/usersSlice";
