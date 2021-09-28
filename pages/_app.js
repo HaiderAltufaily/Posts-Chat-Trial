@@ -20,7 +20,6 @@ import { addLike, setPosts } from "../store/postsSlice";
 import moment from "moment";
 function MyApp({ Component, pageProps }) {
   const dispatch = useDispatch();
-
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -33,23 +32,23 @@ function MyApp({ Component, pageProps }) {
 
     return () => unsub();
   }, []);
-  useEffect(() => {}, []);
-  useEffect(() => {
-    const q = query(collection(db, "posts"), orderBy("time", "desc"));
-    const unsub = onSnapshot(q, (snpa) => {
-      const posts = snpa.docs.map((doc) => {
-        return {
-          ...doc.data(),
-          id: doc.id,
-          time: moment(doc.data().time.toDate()).calendar(),
-        };
-      });
-      dispatch(setPosts(posts));
-      // if(auth.currentUser)
-      // dispatch(addLike("awda"));
-    });
-    return () => unsub();
-  });
+
+  // useEffect(() => {
+  //   const q = query(collection(db, "posts"), orderBy("time", "desc"));
+  //   const unsub = onSnapshot(q, (snpa) => {
+  //     const posts = snpa.docs.map((doc) => {
+  //       return {
+  //         ...doc.data(),
+  //         id: doc.id,
+  //         time: moment(doc.data().time.toDate()).calendar(),
+  //       };
+  //     });
+  //     dispatch(setPosts(posts));
+  //     // if(auth.currentUser)
+  //     // dispatch(addLike("awda"));
+  //   });
+  //   return () => unsub();
+  // });
   // useEffect(() => {
 
   //   const unsub = onSnapshot(

@@ -32,8 +32,14 @@ export async function getStaticProps(context) {
     time: moment(docs.time.toDate()).calendar(),
     id: postId,
   };
+
+  const dod = newDoc.replies.map((reply) => {
+    return { ...reply, time: moment(reply.time.toDate()).fromNow() };
+  });
+  const newDoo = { ...newDoc, replies: dod };
+
   return {
-    props: { post: newDoc },
+    props: { post: newDoo },
     revalidate: 1,
   };
 }

@@ -8,7 +8,7 @@ import {
   signInWithPopup,
   updateProfile,
 } from "@firebase/auth";
-import { addDoc, doc, getDoc, setDoc } from "@firebase/firestore";
+import { addDoc, doc, getDoc, setDoc, updateDoc } from "@firebase/firestore";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { auth, db } from "../firebase/firebase";
@@ -30,6 +30,8 @@ export const handleSignUp = createAsyncThunk(
       username: auth.currentUser.displayName,
       createdAt: new Date(),
       email: user.email,
+      likes: [],
+      id: response.user.uid,
     });
     return user.username;
   }
@@ -37,12 +39,15 @@ export const handleSignUp = createAsyncThunk(
 export const handleSignIn = createAsyncThunk(
   "handleSignIn/auth",
   async ({ user, checked }) => {
-    //   const persistance = await setPersistence(auth,checked? localStorage:sessionStorage)
     const response = await signInWithEmailAndPassword(
       auth,
       user.email,
       user.password
     );
+    await updateDoc(doc(db, "users", response.user.uid), {
+      isOnline: true,
+    });
+
     // const sentV = await sendEmailVerification(response.user);
   }
 );
@@ -67,6 +72,9 @@ export const googleSignin = createAsyncThunk(
     // const presist = await setPersistence(auth, localStorage);
     const response = await signInWithPopup(auth, googleProvider);
     const docSnap = (await getDoc(doc(db, "users", response.user.uid))).data();
+    await updateDoc(doc(db, "users", response.user.uid), {
+      isOnline: true,
+    });
 
     if (!docSnap) {
       await setDoc(doc(db, "users", response.user.uid), {

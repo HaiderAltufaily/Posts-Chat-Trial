@@ -10,7 +10,6 @@ import {
   where,
 } from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
-import MeetUpList from "../components/meetups/MeetupList";
 import db, { auth } from "../firebase/firebase";
 import { v4 as uuid } from "uuid";
 import { wrapper } from "../store/store";
@@ -18,6 +17,10 @@ import { wrapper } from "../store/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import PostList from "../components/posts/PostList";
+import moment from "moment";
+import { loginHandler } from "../store/authSlice";
+import { getAllUsers } from "../store/usersSlice";
 // const meetUps = [
 //   {
 //     id: "m1",
@@ -36,14 +39,34 @@ import axios from "axios";
 //     description: "second MeetUp",
 //   },
 // ];
-
 function HomePage() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  console.log(auth);
   // const x = useSelector((state) => state.auth);
   const [posts, setPosts] = useState([]);
-  const logedin = useSelector((state) => state.auth.isLoggedIn);
-  console.log(logedin);
-  const allPosts = useSelector((state) => state.posts.realTimePosts);
 
+  const sortBy = useSelector((state) => state.posts.sortValue);
+  const sort = sortBy === "Mostly Liked" ? "likes" : "time";
+  useEffect(() => {
+    const q = query(collection(db, "posts"), orderBy(sort, "desc"));
+    const unsub = onSnapshot(q, (snpa) => {
+      const posts = snpa.docs.map((doc) => {
+        return {
+          ...doc.data(),
+          id: doc.id,
+          time: moment(doc.data().time.toDate()).calendar(),
+        };
+      });
+      dispatch(getAllUsers());
+      setPosts(posts);
+
+      // dispatch(setPosts(posts));
+      // if(auth.currentUser)
+      // dispatch(addLike("awda"));
+    });
+    return () => unsub();
+  }, [sort]);
   // useEffect(() => {
   //   const q = query(collection(db, "posts"), orderBy("time", "desc"));
   //   const unsub = onSnapshot(q, (snaap) => {
@@ -68,7 +91,7 @@ function HomePage() {
   //   get();
   // }, []);
 
-  return <>{<MeetUpList posts={allPosts} />}</>;
+  return <>{<PostList posts={posts} />}</>;
 }
 // export const getStaticProps = wrapper.getStaticProps((store) => async () => {
 //   const docs = await getDocs(collection(db, "posts")).then((snapshot) =>

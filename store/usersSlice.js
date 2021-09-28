@@ -12,17 +12,21 @@ export const getUser = createAsyncThunk("getUser/posts", async (user) => {
 export const getSingleUser = createAsyncThunk(
   "getSingleUser/users",
   async (id) => {
-    const response = await fetch(`/api/${id}`);
+    const response = await fetch(`/api/users/${id}`);
     const data = await response.json();
     return data;
   }
 );
+export const getAllUsers = createAsyncThunk("getAllUsers/users", async () => {
+  return axios.get("/api/users").then((d) => d.data);
+});
 
 const usersSlice = createSlice({
   name: "users",
   initialState: {
     getUserStatus: "",
     user: "",
+    users: [],
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -40,6 +44,18 @@ const usersSlice = createSlice({
     },
 
     [getSingleUser.rejected]: (state, action) => {
+      state.getUserStatus = action.error.message;
+    },
+    [getAllUsers.pending]: (state, action) => {
+      state.getUserStatus = "loading";
+    },
+    [getAllUsers.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      state.getUserStatus = "success";
+      state.users = action.payload;
+    },
+
+    [getAllUsers.rejected]: (state, action) => {
       state.getUserStatus = action.error.message;
     },
   },

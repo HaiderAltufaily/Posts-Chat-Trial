@@ -1,6 +1,6 @@
 import { sendEmailVerification } from "@firebase/auth";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { auth } from "../../firebase/firebase";
@@ -10,6 +10,7 @@ import classes from "./SignUp.module.css";
 
 function SignUp() {
   const emailRef = useRef();
+  const [show, setShow] = useState(false);
   const usernameRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
@@ -55,15 +56,19 @@ function SignUp() {
       {auth.currentUser && auth.currentUser?.emailVerified === false && (
         <button
           onClick={() =>
-            sendEmailVerification(auth.currentUser).then(() => {
-              console.log("sent success");
-            })
+            sendEmailVerification(auth.currentUser)
+              .then(() => {
+                console.log("sent success");
+                setShow("success");
+              })
+              .catch((err) => setShow(err.message))
           }
         >
           {" "}
           Send Verification Email
         </button>
       )}
+      {show === "success" && <h4>Sent successfully, check your email</h4>}
     </Card>
   );
 }

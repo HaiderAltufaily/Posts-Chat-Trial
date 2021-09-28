@@ -4,7 +4,6 @@ import axios from "axios";
 export const addReply = createAsyncThunk(
   "addReply/replies",
   async ({ postId, reply }) => {
-    console.log(reply);
     return axios.post(`/api/replies/${postId}`, reply);
   }
 );

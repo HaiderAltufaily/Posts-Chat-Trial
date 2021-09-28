@@ -7,7 +7,8 @@ import {
 } from "@firebase/firestore";
 import moment from "moment";
 import React, { Fragment, useEffect, useState } from "react";
-import MeetUpDetails from "../../components/meetups/MeetUpDetails";
+import PostDetails from "../../components/meetups/PostDetails";
+
 import ReplyList from "../../components/meetups/ReplyList";
 import db from "../../firebase/firebase";
 import { wrapper } from "../../store/store";
@@ -23,7 +24,7 @@ function MeetUpDetailsPage({ posts }) {
 
   return (
     <div>
-      <MeetUpDetails
+      <PostDetails
         title={posts.title}
         time={posts.time}
         description={posts.description}

@@ -10,14 +10,13 @@ export const submitPost = createAsyncThunk(
 export const deletePost = createAsyncThunk(
   "deletePost/posts",
   async (postId) => {
-    axios.delete(`/api/posts/${postId}`);
+    return axios.delete(`/api/posts/${postId}`);
   }
 );
 export const editPost = createAsyncThunk(
   "editPost/posts",
   async ({ postId, formData }) => {
-    console.log("editing...", formData);
-    axios.put(`/api/posts/${postId}`, formData);
+    return axios.put(`/api/posts/${postId}`, formData);
   }
 );
 export const addLike = createAsyncThunk(
@@ -34,6 +33,7 @@ const postsSlice = createSlice({
     realTimePosts: [],
     likeStatus: "",
     editStatus: "",
+    sortValue: "Most Recent",
   },
   reducers: {
     setPosts(state, action) {
@@ -44,6 +44,9 @@ const postsSlice = createSlice({
     },
     resetPostStatus(state, action) {
       state.postStatus = "";
+    },
+    setSortValue(state, action) {
+      state.sortValue = action.payload;
     },
   },
   extraReducers: {
@@ -94,10 +97,11 @@ const postsSlice = createSlice({
     },
 
     [editPost.rejected]: (state, action) => {
+      console.log(action);
       state.likeStatus = action.error.message;
     },
   },
 });
-export const { setPosts, resetEditStatus, resetPostStatus } =
+export const { setPosts, resetEditStatus, resetPostStatus, setSortValue } =
   postsSlice.actions;
 export default postsSlice.reducer;

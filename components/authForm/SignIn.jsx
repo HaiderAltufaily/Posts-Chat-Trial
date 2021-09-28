@@ -72,7 +72,7 @@ function SignIn() {
 
         <div className={classes.actions}>
           {stato.error && <p style={{ color: "red" }}> {stato.error} </p>}
-          {!stato.isLoggedIn && (
+          {!auth.currentUser && (
             <button>
               {stato.response === "loading" ? "loading..." : "Sign In"}
             </button>
