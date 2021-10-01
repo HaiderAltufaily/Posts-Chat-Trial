@@ -29,8 +29,8 @@ function index() {
       });
       setProjectChat(docs);
     }
-    getProjectChat();
-  }, []);
+    if (auth.currentUser) getProjectChat();
+  }, [auth.currentUser]);
   console.log(users);
   return (
     <div>

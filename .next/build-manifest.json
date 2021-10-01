@@ -29,20 +29,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/edit/[postId]": [
+    "/chat": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/edit/[postId].js"
-    ],
-    "/new-post": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/new-post.js"
-    ],
-    "/next/dist/pages/_error": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/next/dist/pages/_error.js"
+      "static/chunks/pages/chat.js"
     ]
   },
   "ampFirstPages": []

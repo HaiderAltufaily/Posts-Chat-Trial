@@ -3,9 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/new-post": "pages/new-post.js",
-  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
-  "/api/users/[user]": "pages/api/users/[user].js",
-  "/api/users": "pages/api/users.js",
-  "/edit/[postId]": "pages/edit/[postId].js"
+  "/chat": "pages/chat.js",
+  "/api/users": "pages/api/users.js"
 }
