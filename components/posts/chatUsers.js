@@ -1,4 +1,4 @@
-import { Stack, Flex, Icon, Text } from "@chakra-ui/react";
+import { Stack, Flex, Icon, Text, Box } from "@chakra-ui/react";
 import {
   addDoc,
   collection,
@@ -10,11 +10,11 @@ import {
 } from "@firebase/firestore";
 import axios from "axios";
 import router from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaCircle } from "react-icons/fa";
 import { auth, db } from "../../firebase/firebase";
 
-function ChatUsers({ users }) {
+function ChatUsers({ users, projectChat }) {
   async function handleUser(userId) {
     console.log(userId);
     const docRef = query(
@@ -48,11 +48,44 @@ function ChatUsers({ users }) {
       }
     }
   }
+  function handleProject(id) {
+    router.push(`/chat/${id}`);
+  }
   return (
-    <Stack bg="blackAlpha.100" boxShadow="lg" p="5" spacing="5">
-      {" "}
-      {users.map((user) => {
-        if (user.id !== auth.currentUser?.uid)
+    <Box>
+      <Stack bg="blackAlpha.100" boxShadow="lg" p="5" spacing="5">
+        {" "}
+        <h1>Users</h1>;
+        {users.map((user) => {
+          if (user.id !== auth.currentUser?.uid)
+            return (
+              <Flex
+                p="3"
+                borderBottom="1px solid gray"
+                align="baseline"
+                key={user.id}
+                _hover={{ background: "gray.200" }}
+                cursor="pointer"
+                onClick={() => handleUser(user.id)}
+              >
+                <Text as={"h1"} fontSize="xl">
+                  {user.username}
+                </Text>
+                <Icon
+                  mx="3"
+                  w="3"
+                  h="3"
+                  as={FaCircle}
+                  color={user.isOnline ? "green" : "red"}
+                />
+              </Flex>
+            );
+        })}{" "}
+      </Stack>
+      <Stack mt="10" bg="blackAlpha.100" boxShadow="lg" p="5" spacing="5">
+        {" "}
+        <h1>Projects</h1>
+        {projectChat.map((user) => {
           return (
             <Flex
               p="3"
@@ -61,22 +94,23 @@ function ChatUsers({ users }) {
               key={user.id}
               _hover={{ background: "gray.200" }}
               cursor="pointer"
-              onClick={() => handleUser(user.id)}
+              onClick={() => handleProject(user.id)}
             >
               <Text as={"h1"} fontSize="xl">
-                {user.username}
+                {user.title}
               </Text>
               <Icon
                 mx="3"
                 w="3"
                 h="3"
                 as={FaCircle}
-                color={user.isOnline ? "green" : "red"}
+                // color={user.isOnline ? "green" : "red"}
               />
             </Flex>
           );
-      })}{" "}
-    </Stack>
+        })}{" "}
+      </Stack>
+    </Box>
   );
 }
 

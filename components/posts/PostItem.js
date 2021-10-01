@@ -3,15 +3,16 @@ import classes from "./MeetupItem.module.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { doc, getDoc } from "@firebase/firestore";
+import { arrayUnion, doc, getDoc, updateDoc } from "@firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
-import { IconButton, Flex } from "@chakra-ui/react";
+import { IconButton, Flex, Button } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addLike, deletePost } from "../../store/postsSlice";
 import moment from "moment";
 import { getSingleUser } from "../../store/usersSlice";
 import { throttle } from "lodash";
+import Link from "next/link";
 import {
   AiOutlineHeart,
   AiFillHeart,
@@ -32,9 +33,11 @@ function PostItem(props) {
     router.push(`${router.pathname}${props.id}`);
   }
   const likeStatus = useSelector((state) => state.posts.likeStatus);
-
+  // const users = useSelector((state) => state.users.users);
   const user = props.user;
   const currentUser = useSelector((state) => state.auth.currentUser);
+  const us = props.users.filter((user) => user.id === props.user);
+  console.log("aaa", us);
 
   useEffect(() => {
     let isMounted = true;
@@ -48,6 +51,7 @@ function PostItem(props) {
     return () => (isMounted = false);
     // dispatch(getSingleUser(user));
   }, []);
+
   const dispatch = useDispatch();
 
   function handleDelete() {
@@ -71,6 +75,16 @@ function PostItem(props) {
     //   .then((d) => setStatus("success"))
     //   .catch((err) => setStatus(err.message));
   }
+  async function handleJoin() {
+    const chatRoomRef = await (await getDoc(doc(db, "chat", props.id))).data();
+    if (chatRoomRef.users.includes(auth.currentUser?.uid)) return;
+
+    await updateDoc(doc(db, "chat", props.id), {
+      users: arrayUnion(auth.currentUser?.uid),
+    });
+    console.log("success");
+  }
+
   return (
     <div>
       <li className={classes.item}>
@@ -86,8 +100,13 @@ function PostItem(props) {
               <IconButton onClick={handleDelete} icon={<CloseIcon />} />
             </Flex>
           )}
+          {auth.currentUser?.uid !== props.user && (
+            <Flex justify="center">
+              <Button onClick={handleJoin}>Join Project</Button>
+            </Flex>
+          )}
           <div className={classes.content}>
-            <h1> {userInfo.username} </h1>
+            <h1> {us[0].username} </h1>
             <h3>{props.title}</h3>
             {/* <span>{moment(props.time.toDate()).calendar()}</span> */}
             <span>{props.time}</span>
@@ -99,7 +118,8 @@ function PostItem(props) {
             <h4>{props.details}</h4>
           </div>
           <div className={classes.actions}>
-            <button onClick={showDetailHandler}>Show Details</button>
+            {/* <button onClick={showDetailHandler}>Show Details</button> */}
+            <Link href={`/${props.id}`}>Show Details </Link>
           </div>
           <div>
             {status === "loading" ? (

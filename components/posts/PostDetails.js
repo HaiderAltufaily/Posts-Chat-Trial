@@ -22,7 +22,7 @@ function PostDetails(props) {
     error,
     data: user,
   } = useFetch({
-    url: `/api//users${userId}`,
+    url: `/api/users/${userId}`,
     method: "get",
   });
 

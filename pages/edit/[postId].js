@@ -2,7 +2,7 @@ import { collection, doc, getDoc, getDocs } from "@firebase/firestore";
 import axios from "axios";
 import moment from "moment";
 import React from "react";
-import Edit from "../../components/meetups/Edit";
+import Edit from "../../components/posts/Edit";
 import { db } from "../../firebase/firebase";
 
 function EditPage({ post }) {

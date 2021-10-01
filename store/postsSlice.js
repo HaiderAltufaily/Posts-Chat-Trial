@@ -50,12 +50,12 @@ const postsSlice = createSlice({
     },
   },
   extraReducers: {
-    [HYDRATE]: (state, action) => {
-      return {
-        ...state,
-        ...action.payload.some,
-      };
-    },
+    // [HYDRATE]: (state, action) => {
+    //   return {
+    //     ...state,
+    //     ...action.payload.some,
+    //   };
+    // },
 
     [submitPost.pending]: (state, action) => {
       state.postStatus = "loading";

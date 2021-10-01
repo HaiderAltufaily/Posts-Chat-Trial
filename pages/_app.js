@@ -14,23 +14,32 @@ import {
   orderBy,
   query,
 } from "@firebase/firestore";
-import router from "next/router";
+import { useRouter } from "next/router";
 import { ChakraProvider } from "@chakra-ui/react";
 import { addLike, setPosts } from "../store/postsSlice";
 import moment from "moment";
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
+    setShow(false);
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(loginHandler(true));
-        onSnapshot(doc(db, "users", user.uid), (snap) =>
-          dispatch(setCurrentUser(snap.data()))
-        );
+        onSnapshot(doc(db, "users", user.uid), (snap) => {
+          dispatch(setCurrentUser(snap.data()));
+          setShow(true);
+        });
+      } else if (!user) {
+        dispatch(loginHandler(true));
+        setShow(true);
       }
     });
 
-    return () => unsub();
+    return () => {
+      unsub();
+    };
   }, []);
 
   // useEffect(() => {
@@ -68,10 +77,12 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ChakraProvider>
-      <Layout>
-        {" "}
-        <Component {...pageProps} />
-      </Layout>
+      {
+        <Layout>
+          {" "}
+          <Component {...pageProps} />
+        </Layout>
+      }
     </ChakraProvider>
   );
 }

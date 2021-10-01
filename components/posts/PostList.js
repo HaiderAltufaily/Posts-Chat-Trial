@@ -35,6 +35,7 @@ function PostList(props) {
               details={post.description}
               time={post.time}
               likes={post.likes}
+              users={props.users}
             />
           );
         })}

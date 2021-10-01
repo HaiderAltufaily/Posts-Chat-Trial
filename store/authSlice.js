@@ -109,12 +109,12 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    [HYDRATE]: (state, action) => {
-      return {
-        ...state,
-        ...action.payload.auth,
-      };
-    },
+    // [HYDRATE]: (state, action) => {
+    //   return {
+    //     ...state,
+    //     ...action.payload.some,
+    //   };
+    // },
     [handleSignUp.pending]: (state, action) => {
       state.response = "loading";
     },
