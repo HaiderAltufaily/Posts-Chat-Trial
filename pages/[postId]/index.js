@@ -16,7 +16,6 @@ import { loginHandler } from "../../store/authSlice";
 import { wrapper } from "../../store/store";
 import { getSingleUser } from "../../store/usersSlice";
 function MeetUpDetailsPage({ posts }) {
-  console.log(process.env.key);
   const [replies, setReplies] = useState([]);
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "posts", posts.id), (snapshot) => {

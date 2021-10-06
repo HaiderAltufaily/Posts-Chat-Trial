@@ -2,17 +2,17 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const firebaseConfigs = {
-  apiKey: "AIzaSyAtwCgCCkp2naBWDqDj4pIClgI4VUuJOjQ",
+  apiKey: process.env.key,
 
-  authDomain: "todos-6bfa5.firebaseapp.com",
+  authDomain: process.env.authDomain,
 
-  projectId: "todos-6bfa5",
+  projectId: process.env.projectId,
 
-  storageBucket: "todos-6bfa5.appspot.com",
+  storageBucket: process.env.storageBucket,
 
-  messagingSenderId: "1059043535957",
+  messagingSenderId: process.env.messagingSender,
 
-  appId: "1:1059043535957:web:e1a3db0501a5b96686b8dc",
+  appId: process.env.appId,
 };
 const app = initializeApp(firebaseConfigs);
 

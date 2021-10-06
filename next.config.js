@@ -1,11 +1,11 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    key: "AIzaSyA9QkVV6QgX-omrlfRa8UYrS8XwvnEvePg",
-    authDomain: "let-s-work-4f648.firebaseapp.com",
-    projectId: "let-s-work-4f648",
-    storageBucket: "let-s-work-4f648.appspot.com",
-    messagingSender: "884497358748",
-    appId: "1:884497358748:web:6601bd649e8fc6b3e4f259",
+    key: "AIzaSyAtwCgCCkp2naBWDqDj4pIClgI4VUuJOjQ",
+    authDomain: "todos-6bfa5.firebaseapp.com",
+    projectId: "todos-6bfa5",
+    storageBucket: "todos-6bfa5.appspot.com",
+    messagingSender: "1059043535957",
+    appId: "1:1059043535957:web:e1a3db0501a5b96686b8dc",
   },
 };
