@@ -27,14 +27,16 @@ function MeetUpDetailsPage({ posts }) {
   const post = useSelector((state) => state.posts);
   return (
     <div>
-      <PostDetails
-        title={posts.title}
-        time={posts.time}
-        description={posts.description}
-        image={posts.image}
-        user={posts.user}
-        id={posts.id}
-      />
+      {posts && (
+        <PostDetails
+          title={posts.title}
+          time={posts.time}
+          description={posts.description}
+          image={posts.image}
+          user={posts.user}
+          id={posts.id}
+        />
+      )}
       <ReplyList replies={replies} />
     </div>
   );
