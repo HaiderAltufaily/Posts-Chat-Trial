@@ -1,18 +1,22 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-
+import { getAuth } from "firebase/auth";
 const firebaseConfigs = {
-  apiKey: "AIzaSyAtwCgCCkp2naBWDqDj4pIClgI4VUuJOjQ",
+  apiKey: process.env.NEXT_PUBLIC_KEY,
 
-  authDomain: "todos-6bfa5.firebaseapp.com",
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
 
-  projectId: "todos-6bfa5",
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
 
-  storageBucket: "todos-6bfa5.appspot.com",
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
 
-  messagingSenderId: "1059043535957",
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER,
 
-  appId: "1:1059043535957:web:e1a3db0501a5b96686b8dc",
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 const app = initializeApp(firebaseConfigs);
+
+export const db = getFirestore();
+export const auth = getAuth();
+
 export default getFirestore();
